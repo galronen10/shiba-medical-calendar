@@ -1,20 +1,20 @@
-import { IStoreUser } from '@/models/user';
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
+import { IUser } from '@/models/user.model';
 
 interface UserState {
-  userData: IStoreUser;
+  userData: IUser;
 }
 
 const initialState: UserState = {
-  userData: { email: '', fullName: '', uid: '' },
+  userData: { id: 1, name: '', phone: '' },
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    updateUser: (state, action: PayloadAction<Partial<IStoreUser>>) => {
+    updateUser: (state, action: PayloadAction<Partial<IUser>>) => {
       return {
         ...state,
         userData: { ...state.userData, ...action.payload },
@@ -26,11 +26,11 @@ export const userSlice = createSlice({
 
 export const { updateUser, logout } = userSlice.actions;
 
-export const selectUser = (state: RootState): IStoreUser => state.user.userData;
+export const selectUser = (state: RootState): IUser => state.user.userData;
 
 export const selectUserId = createSelector(
   selectUser,
-  (user: IStoreUser): string => user.uid,
+  (user: IUser): number => user.id,
 );
 
 export default userSlice.reducer;

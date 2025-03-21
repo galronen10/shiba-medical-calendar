@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth';
 import { doctorsStub } from './doctorsStub';
 import axios from 'axios';
+import { IAppointmentDTO } from '@/models/appointment.entity';
 
 export const serverURL = process.env.SERVER_URL || 'http://192.168.1.29:3000';
 
@@ -45,11 +46,14 @@ export const api = {
       doctorsStub,
   },
   appointments: {
-    getAppointmentsByDateAndDoctor: async (
+    getAppointmentsExistingDates: async (
       doctorId: number,
       date: string,
     ): Promise<Date[]> => {
       return [];
+    },
+    setAppointment: async (newAppointment: IAppointmentDTO): Promise<void> => {
+      await axiosInstance.post(`/appointments`, newAppointment);
     },
   },
 };

@@ -9,10 +9,12 @@ import {
   resetForm,
   selectSchedulerFromState,
 } from '@/redux/schedulerForm';
-import { dateFormatterWithTime } from '@/utils/date';
 import { EAppRoutes } from '@/models/routes.model';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
+import { api } from '@/api';
+import { IAppointmentDTO } from '@/models/appointment.entity';
+import { selectUserId } from '@/redux/user';
 
 interface IProps {
   isVisible: boolean;
@@ -27,13 +29,23 @@ export const SetAppointmentDialog: FC<IProps> = ({
   const selectedFormData: ISchedulerFormState = useAppSelector(
     selectSchedulerFromState,
   );
+  const userId: number = useAppSelector(selectUserId);
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const onConfirm = async () => {
     setIsButtonLoading(true);
     try {
-      // await api.report.deleteReport(reportId);
+      const newAppointment: IAppointmentDTO = {
+        userId,
+        doctorId: selectedFormData.selectedDoctor!.id,
+        date: new Date(
+          `${selectedFormData.selectedTime!.date}T${selectedFormData.selectedTime!.time}:00Z`,
+        ),
+      };
+
+      await api.appointments.setAppointment(newAppointment);
       setIsButtonLoading(false);
       dispatch(resetForm());
       navigation.navigate(EAppRoutes.home);
@@ -48,9 +60,11 @@ export const SetAppointmentDialog: FC<IProps> = ({
       <Dialog visible={isVisible} onDismiss={handleClose}>
         <Dialog.Title style={styles.bodyText}>קביעת תור</Dialog.Title>
         <Dialog.Content>
-          <Text>{selectedFormData.selectedDoctor!.name}</Text>
-          <Text>{selectedFormData.selectedField!.name}</Text>
-          <Text>{dateFormatterWithTime(selectedFormData.selectedTime!)}</Text>
+          <Text>{selectedFormData.selectedDoctor?.name}</Text>
+          <Text>{selectedFormData.selectedField?.name}</Text>
+          <Text>
+            {`${selectedFormData.selectedTime?.date} - ${selectedFormData.selectedTime?.time}`}
+          </Text>
         </Dialog.Content>
         <Dialog.Actions>
           <Button

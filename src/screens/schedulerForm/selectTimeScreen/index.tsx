@@ -60,7 +60,7 @@ export const SelectTimeScreen: FC = () => {
     const queryData = async () => {
       if (selectedDoctor) {
         const existingSlots: Date[] =
-          await api.appointments.getAppointmentsByDateAndDoctor(
+          await api.appointments.getAppointmentsExistingDates(
             selectedDoctor.id,
             selectedDate,
           );
@@ -78,8 +78,12 @@ export const SelectTimeScreen: FC = () => {
 
   const selectTime = () => {
     if (selectedTime) {
-      const dateForStore = new Date(`${selectedDate}T${selectedTime}:00Z`);
-      dispatch(selectTimeForForm(dateForStore));
+      dispatch(
+        selectTimeForForm({
+          date: selectedDate,
+          time: selectedTime,
+        }),
+      );
       setShowConfirmDialog(true);
     } else {
       toast.error('לא ניתן לקבוע תור מבלי לבחור זמן פנוי');

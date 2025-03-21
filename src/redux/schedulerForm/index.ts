@@ -2,12 +2,13 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import { IMedicalField } from '@/models/medicalField.model';
 import { IDoctor } from '@/models/doctor.model';
+import { ISchedulerSelectedTime } from '@/models/schedulerForm.model';
 
 // Define a type for the slice state
 export interface ISchedulerFormState {
   selectedField?: IMedicalField;
   selectedDoctor?: IDoctor;
-  selectedTime?: Date;
+  selectedTime?: ISchedulerSelectedTime;
 }
 
 // Define the initial state using that type
@@ -27,7 +28,10 @@ export const schedulerFormSlice = createSlice({
       selectedField: state.selectedField,
       selectedDoctor: action.payload,
     }),
-    selectTimeForForm: (state, action: PayloadAction<Date>) => ({
+    selectTimeForForm: (
+      state,
+      action: PayloadAction<ISchedulerSelectedTime>,
+    ) => ({
       ...state,
       selectedTime: action.payload,
     }),
