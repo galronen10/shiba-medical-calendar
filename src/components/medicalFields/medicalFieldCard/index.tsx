@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Card, Text } from 'react-native-paper';
 import React, { FC } from 'react';
-import { IMedicalField } from '@/models/medicalFields';
+import { IMedicalField } from '@/models/medicalField.model';
 
 const styles = StyleSheet.create({
   card: {

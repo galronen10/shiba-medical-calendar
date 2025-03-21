@@ -7,11 +7,11 @@ import {
   selectDoctorForForm,
   selectSchedulerMedicalField,
 } from '@/redux/schedulerForm';
-import { IMedicalField } from '@/models/medicalFields';
+import { IMedicalField } from '@/models/medicalField.model';
 import { useNavigation } from '@react-navigation/native';
 import { useAppSelector } from '@/hooks/store';
-import { IDoctor } from '@/models/doctors';
-import { EAppRoutes } from '@/models/routes';
+import { IDoctor } from '@/models/doctor.model';
+import { EAppRoutes } from '@/models/routes.model';
 import { api } from '@/api';
 import { DoctorsList } from '@/components/doctors';
 

@@ -2,9 +2,9 @@ import { FC, useCallback } from 'react';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { selectMedicalFieldForForm } from '@/redux/schedulerForm';
-import { IMedicalField } from '@/models/medicalFields';
+import { IMedicalField } from '@/models/medicalField.model';
 import { useNavigation } from '@react-navigation/native';
-import { EAppRoutes } from '@/models/routes';
+import { EAppRoutes } from '@/models/routes.model';
 import { SelectMedicalFieldList } from '@/components/medicalFields';
 
 export const SelectMedicalFieldFormScreen: FC = () => {

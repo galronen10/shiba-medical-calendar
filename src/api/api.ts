@@ -1,6 +1,6 @@
-import { IDoctor } from '@/models/doctors';
-import { IMedicalField } from '@/models/medicalFields';
-import { IUserRegister } from '@/models/user';
+import { IDoctor } from '@/models/doctor.model';
+import { IMedicalField } from '@/models/medicalField.model';
+import { IUserRegister } from '@/models/user.model';
 import { auth } from 'config/firebase';
 import {
   UserCredential,

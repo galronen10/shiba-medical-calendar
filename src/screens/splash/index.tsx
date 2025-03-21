@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { auth } from 'config/firebase';
-import { EAppRoutes } from '@/models/routes';
+import { EAppRoutes } from '@/models/routes.model';
 import { FullSizeLoader } from '@/components/common';
 
 export const SplashScreen: FC = () => {

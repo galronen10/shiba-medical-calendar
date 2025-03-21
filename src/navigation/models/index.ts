@@ -1,4 +1,4 @@
-import { EAppRoutes } from '@/models/routes';
+import { EAppRoutes } from '@/models/routes.model';
 
 export const titleDisplayText: Record<EAppRoutes, string> = {
   [EAppRoutes.home]: 'ברוכים הבאים',

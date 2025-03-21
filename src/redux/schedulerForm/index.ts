@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
-import { IMedicalField } from '@/models/medicalFields';
-import { IDoctor } from '@/models/doctors';
+import { IMedicalField } from '@/models/medicalField.model';
+import { IDoctor } from '@/models/doctor.model';
 
 // Define a type for the slice state
 export interface ISchedulerFormState {

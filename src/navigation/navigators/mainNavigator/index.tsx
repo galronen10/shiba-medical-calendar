@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootStack } from '../../utils';
 import { HomeScreen, LoginScreen, SplashScreen } from '@/screens';
-import { EAppRoutes } from '@/models/routes';
+import { EAppRoutes } from '@/models/routes.model';
 import { SchedulerNavigator } from '../schedulerNavigator';
 import { titleDisplayText } from '@/navigation/models';
 

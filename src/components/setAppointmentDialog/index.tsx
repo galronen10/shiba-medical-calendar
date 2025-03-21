@@ -10,7 +10,7 @@ import {
   selectSchedulerFromState,
 } from '@/redux/schedulerForm';
 import { dateFormatterWithTime } from '@/utils/date';
-import { EAppRoutes } from '@/models/routes';
+import { EAppRoutes } from '@/models/routes.model';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 

@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { FlatList, Pressable, View } from 'react-native';
 import { styles } from './styles';
 import React from 'react';
-import { IMedicalField } from '@/models/medicalFields';
+import { IMedicalField } from '@/models/medicalField.model';
 import { api } from '@/api';
 import { MedicalFieldCard } from '../medicalFieldCard';
 

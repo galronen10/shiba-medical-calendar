@@ -1,4 +1,4 @@
-import { EAppRoutes } from '@/models/routes';
+import { EAppRoutes } from '@/models/routes.model';
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import { IconButton } from 'react-native-paper';

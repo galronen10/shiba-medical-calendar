@@ -2,7 +2,7 @@ import { toast } from '@/utils';
 import { LoginFormData } from './formUtils';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { EAppRoutes } from '@/models/routes';
+import { EAppRoutes } from '@/models/routes.model';
 import { api } from '@/api';
 import { AuthErrorCodes } from 'firebase/auth';
 

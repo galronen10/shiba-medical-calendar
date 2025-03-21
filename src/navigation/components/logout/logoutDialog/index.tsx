@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { Portal, Dialog, Text, Button } from 'react-native-paper';
 import { toast } from '@/utils';
 import { api } from '@/api';
-import { EAppRoutes } from '@/models/routes';
+import { EAppRoutes } from '@/models/routes.model';
 import { logout } from '@/redux/user';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';

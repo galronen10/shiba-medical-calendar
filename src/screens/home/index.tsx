@@ -2,10 +2,10 @@ import { StyleSheet, View } from 'react-native';
 import React, { FC, useCallback } from 'react';
 import { Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import { EAppRoutes } from '@/models/routes';
+import { EAppRoutes } from '@/models/routes.model';
 import { useDispatch } from 'react-redux';
 import { SelectMedicalFieldList } from '@/components/medicalFields';
-import { IMedicalField } from '@/models/medicalFields';
+import { IMedicalField } from '@/models/medicalField.model';
 import { selectMedicalFieldForForm } from '@/redux/schedulerForm';
 
 const styles = StyleSheet.create({
