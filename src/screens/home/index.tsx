@@ -39,7 +39,7 @@ export const HomeScreen: FC = () => {
   return (
     <View style={styles.container}>
       <Text variant="headlineSmall" style={styles.headlineText}>
-        בחר תחום הרפואה על מנת לקבוע תור ראשון
+        בחר תחום שירות על מנת לקבוע תור ראשון
       </Text>
 
       <SelectMedicalFieldList selectMedicalField={selectMedicalField} />

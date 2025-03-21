@@ -14,6 +14,7 @@ const stack = createNativeStackNavigator();
 export const SchedulerNavigator = () => {
   return (
     <stack.Navigator
+      initialRouteName={EAppRoutes.selectField}
       screenOptions={({ route, navigation: { navigate } }) => ({
         headerTitleAlign: 'center',
         title: titleDisplayText[route.name as EAppRoutes],

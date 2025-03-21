@@ -8,8 +8,19 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { medicalFieldsStub } from './medicalFIeldsStub';
 import { doctorsStub } from './doctorsStub';
+import axios from 'axios';
+
+export const serverURL = process.env.SERVER_URL || 'http://192.168.1.29:3000';
+
+export const axiosInstance = axios.create({
+  baseURL: serverURL,
+  timeout: 15000,
+  headers: {
+    'Access-Control-Allow-Credentials': true,
+    'Access-Control-Allow-Origin': '*',
+  },
+});
 
 export const api = {
   auth: {
@@ -24,7 +35,10 @@ export const api = {
     logout: async (): Promise<void> => signOut(auth),
   },
   medicalField: {
-    getAll: async (): Promise<IMedicalField[]> => medicalFieldsStub,
+    getAll: async (): Promise<IMedicalField[]> => {
+      const res = await axiosInstance.get(`/medicalFields`);
+      return res.data;
+    },
   },
   doctor: {
     getByMedicalFieldId: async (fieldId: number): Promise<IDoctor[]> =>
