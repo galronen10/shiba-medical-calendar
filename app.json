@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "shiba_medical_calendar",
+    "slug": "shiba_medical_calendar",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.anonymous.shiba_medical_calendar"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}

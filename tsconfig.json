@@ -1,0 +1,14 @@
+{
+  "extends": "expo/tsconfig.base",
+  "include": ["src", "App.tsx", ".eslintrc.js", "babel.config.js", "config"],
+  "compilerOptions": {
+    "jsx": "react",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@assets/*": ["assets/*"],
+      "@firebase/auth": ["./node_modules/@firebase/auth/dist/index.rn.d.ts"]
+    }
+  }
+}
