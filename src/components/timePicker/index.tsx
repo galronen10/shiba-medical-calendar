@@ -10,7 +10,7 @@ import {
 import React from 'react';
 
 const { width } = Dimensions.get('window');
-const ITEM_WIDTH = width / 3;
+const ITEM_WIDTH = width / 3.5;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,11 +1,11 @@
 import { IDoctor } from './doctor.model';
-import { IUser } from './user.model';
+import { IMedicalField } from './medicalField.model';
 
 export interface IAppointments {
   id: number;
   date: Date;
-  doctor: IDoctor;
-  user: IUser;
+  doctor: Pick<IDoctor, 'id' | 'name'>;
+  medicalField: IMedicalField;
 }
 
 export interface IAppointmentDTO {
