@@ -1,18 +1,16 @@
-import { StyleSheet, View } from 'react-native';
-import { Card, Paragraph } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { Card, Text } from 'react-native-paper';
 import React, { FC } from 'react';
 import { IMedicalField } from '@/models/medicalFields';
 
 const styles = StyleSheet.create({
   card: {
-    alignContent: 'center',
+    height: 150,
+    margin: 10,
     width: 150,
   },
-  container: {
-    margin: 10,
-  },
-  reportData: {
-    textAlign: 'right',
+  textToCenter: {
+    textAlign: 'center',
   },
 });
 
@@ -22,15 +20,11 @@ interface IProps {
 
 export const MedicalFieldCard: FC<IProps> = ({ medicalField }) => {
   return (
-    <View style={styles.container}>
-      <Card style={styles.card}>
-        <Card.Title title={medicalField.name} />
-        <Card.Content>
-          <Paragraph style={styles.reportData}>
-            {medicalField.description}
-          </Paragraph>
-        </Card.Content>
-      </Card>
-    </View>
+    <Card style={styles.card}>
+      <Card.Title title={medicalField.name} titleStyle={styles.textToCenter} />
+      <Card.Content>
+        <Text style={styles.textToCenter}>{medicalField.description}</Text>
+      </Card.Content>
+    </Card>
   );
 };

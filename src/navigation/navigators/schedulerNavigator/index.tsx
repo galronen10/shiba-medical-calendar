@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { EAppRoutes } from '@/models/routes';
 import {
-  SelectMedicalFieldScreen,
+  SelectMedicalFieldFormScreen,
   SelectDoctorScreen,
   SelectTimeScreen,
 } from '@/screens';
@@ -14,19 +14,15 @@ const stack = createNativeStackNavigator();
 export const SchedulerNavigator = () => {
   return (
     <stack.Navigator
-      screenOptions={({ route, navigation: { navigate } }) => {
-        const pageName = titleDisplayText[route.name as EAppRoutes];
-        return {
-          headerTitleAlign: 'center',
-          title: pageName,
-          tabBarLabel: pageName,
-          headerRight: () => <HeaderCloseForm navigate={navigate} />,
-        };
-      }}
+      screenOptions={({ route, navigation: { navigate } }) => ({
+        headerTitleAlign: 'center',
+        title: titleDisplayText[route.name as EAppRoutes],
+        headerRight: () => <HeaderCloseForm navigate={navigate} />,
+      })}
     >
       <stack.Screen
         name={EAppRoutes.selectField}
-        component={SelectMedicalFieldScreen}
+        component={SelectMedicalFieldFormScreen}
       />
       <stack.Screen
         name={EAppRoutes.selectDoctor}

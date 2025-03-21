@@ -1,3 +1,3 @@
-export { SelectMedicalFieldScreen } from './selectMedicalFieldScreen';
+export { SelectMedicalFieldFormScreen } from './selectMedicalFieldFormScreen';
 export { SelectDoctorScreen } from './selectDoctorScreen';
 export { SelectTimeScreen } from './selectTimeScreen';

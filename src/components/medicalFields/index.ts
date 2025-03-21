@@ -1,2 +1,2 @@
 export { MedicalFieldCard } from './medicalFieldCard';
-export { MedicalFieldList } from './medicalFieldsList';
+export { SelectMedicalFieldList } from './selectMedicalFieldList';

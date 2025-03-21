@@ -4,17 +4,23 @@ import { RootStack } from '../../utils';
 import { HomeScreen, LoginScreen, SplashScreen } from '@/screens';
 import { EAppRoutes } from '@/models/routes';
 import { SchedulerNavigator } from '../schedulerNavigator';
+import { titleDisplayText } from '@/navigation/models';
 
 export const MainNavigator = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator initialRouteName={EAppRoutes.splash}>
         <RootStack.Group
-          screenOptions={{
-            headerShown: false,
-          }}
+          screenOptions={({ route }) => ({
+            headerTitleAlign: 'center',
+            title: titleDisplayText[route.name as EAppRoutes],
+          })}
         >
-          <RootStack.Screen name={EAppRoutes.splash} component={SplashScreen} />
+          <RootStack.Screen
+            name={EAppRoutes.splash}
+            component={SplashScreen}
+            options={{ headerShown: false }}
+          />
           <RootStack.Screen
             name={EAppRoutes.schedulerForm}
             component={SchedulerNavigator}

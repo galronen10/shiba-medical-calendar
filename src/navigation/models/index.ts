@@ -1,7 +1,7 @@
 import { EAppRoutes } from '@/models/routes';
 
 export const titleDisplayText: Record<EAppRoutes, string> = {
-  [EAppRoutes.home]: 'בית',
+  [EAppRoutes.home]: 'ברוכים הבאים',
   [EAppRoutes.reportForm]: '',
   [EAppRoutes.login]: 'התחברות',
   [EAppRoutes.splash]: '',
