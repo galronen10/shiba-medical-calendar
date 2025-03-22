@@ -60,7 +60,7 @@ export const SelectTimeScreen: FC = () => {
     const queryData = async () => {
       if (selectedDoctor) {
         const existingSlots: Date[] =
-          await api.appointments.getAppointmentsExistingDates(
+          await api.appointments.getExistingAppointmentsByDateAndDoctor(
             selectedDoctor.id,
             selectedDate,
           );

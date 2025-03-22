@@ -11,7 +11,8 @@ export const SplashScreen: FC = () => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       navigation.reset({
         index: 0,
-        routes: [{ name: user ? EAppRoutes.home : EAppRoutes.login }],
+        // routes: [{ name: user ? EAppRoutes.home : EAppRoutes.login }],
+        routes: [{ name: EAppRoutes.home }],
       });
     });
 

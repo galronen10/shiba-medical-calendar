@@ -5,5 +5,6 @@ export interface IDoctor {
   workingDays: number[];
   phone: string;
   medicalFieldId: number;
+  clinicName: string;
   isFemale: boolean;
 }

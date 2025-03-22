@@ -7,7 +7,11 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  userData: { id: 1, name: '', phone: '' },
+  userData: {
+    id: 's5JdLuSGt6gMh4XC5JBPJyMtvlY2',
+    name: 'גל',
+    phone: '+972522287603',
+  },
 };
 
 export const userSlice = createSlice({
@@ -30,7 +34,7 @@ export const selectUser = (state: RootState): IUser => state.user.userData;
 
 export const selectUserId = createSelector(
   selectUser,
-  (user: IUser): number => user.id,
+  (user: IUser): string => user.id,
 );
 
 export default userSlice.reducer;

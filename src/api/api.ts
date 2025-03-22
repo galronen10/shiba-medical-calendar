@@ -1,6 +1,5 @@
 import { IDoctor } from '@/models/doctor.model';
 import { IMedicalField } from '@/models/medicalField.model';
-import { IUserRegister } from '@/models/user.model';
 import { auth } from 'config/firebase';
 import {
   UserCredential,
@@ -8,7 +7,6 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { doctorsStub } from './doctorsStub';
 import axios from 'axios';
 import { IAppointmentDTO } from '@/models/appointment.entity';
 
@@ -23,9 +21,13 @@ export const axiosInstance = axios.create({
   },
 });
 
+const APPOINTMENT_API = '/appointments';
+const DOCTOR_API = '/doctors';
+const MEDICAL_FIELD_API = '/medicalFields';
+
 export const api = {
   auth: {
-    register: async (data: IUserRegister): Promise<void> => {
+    register: async (data): Promise<void> => {
       const userCredential: UserCredential =
         await createUserWithEmailAndPassword(auth, data.email, data.password);
 
@@ -37,23 +39,28 @@ export const api = {
   },
   medicalField: {
     getAll: async (): Promise<IMedicalField[]> => {
-      const res = await axiosInstance.get(`/medicalFields`);
+      const res = await axiosInstance.get(MEDICAL_FIELD_API);
       return res.data;
     },
   },
   doctor: {
-    getByMedicalFieldId: async (fieldId: number): Promise<IDoctor[]> =>
-      doctorsStub,
+    getByMedicalFieldId: async (fieldId: number): Promise<IDoctor[]> => {
+      const res = await axiosInstance.get(`${DOCTOR_API}/byField/${fieldId}`);
+      return res.data;
+    },
   },
   appointments: {
-    getAppointmentsExistingDates: async (
+    getExistingAppointmentsByDateAndDoctor: async (
       doctorId: number,
       date: string,
     ): Promise<Date[]> => {
-      return [];
+      const res = await axiosInstance.get(
+        `${APPOINTMENT_API}/byDateAndDoctor/${doctorId}/${date}`,
+      );
+      return res.data;
     },
     setAppointment: async (newAppointment: IAppointmentDTO): Promise<void> => {
-      await axiosInstance.post(`/appointments`, newAppointment);
+      await axiosInstance.post(APPOINTMENT_API, newAppointment);
     },
   },
 };
