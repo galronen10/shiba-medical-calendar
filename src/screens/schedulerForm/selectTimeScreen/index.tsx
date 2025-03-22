@@ -7,7 +7,7 @@ import {
   selectTimeForForm,
 } from '@/redux/schedulerForm';
 import { useAppSelector } from '@/hooks/store';
-import { IDoctor } from '@/models/doctors';
+import { IDoctor } from '@/models/doctor.model';
 import { addDays } from 'date-fns';
 import { Calendar, CalendarProvider, DateData } from 'react-native-calendars';
 import { dateToStringFormatter } from '@/utils/date';
