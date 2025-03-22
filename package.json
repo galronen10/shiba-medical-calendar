@@ -24,7 +24,7 @@
     "date-fns": "^3.3.0",
     "expo": "^50.0.17",
     "expo-image-picker": "~14.7.1",
-    "firebase": "^10.6.0",
+    "firebase": "^11.5.0",
     "react": "18.2.0",
     "react-hook-form": "^7.51.2",
     "react-native": "0.73.6",

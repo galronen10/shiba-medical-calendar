@@ -21,3 +21,4 @@ export const storage = getStorage(app);
 export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(asyncStorage),
 });
+auth.settings.appVerificationDisabledForTesting = true;
