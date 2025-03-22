@@ -5,12 +5,12 @@ import { getStorage } from 'firebase/storage';
 import asyncStorage from '@react-native-async-storage/async-storage';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBuzORXsqJSJQ1ABnlRsySotRvJMmyPYTo',
-  authDomain: 'mada-mal.firebaseapp.com',
-  projectId: 'mada-mal',
-  storageBucket: 'mada-mal.appspot.com',
-  messagingSenderId: '479177647580',
-  appId: '1:479177647580:web:33bf253fef5b74ffa95b19',
+  apiKey: 'AIzaSyDERz21yetwU711-q3cbMjIbqqD56RA7E4',
+  authDomain: 'shiba-medical-calender.firebaseapp.com',
+  projectId: 'shiba-medical-calender',
+  storageBucket: 'shiba-medical-calender.firebasestorage.app',
+  messagingSenderId: '533227820991',
+  appId: '1:533227820991:web:d8456874714be5b299b30a',
 };
 
 const app = initializeApp(firebaseConfig);

@@ -1,6 +1,6 @@
 import { FlatList, View } from 'react-native';
 import React, { FC } from 'react';
-import { IDoctor } from '@/models/doctors';
+import { IDoctor } from '@/models/doctor.model';
 import { Button, Card, Icon } from 'react-native-paper';
 import { styles } from './styles';
 

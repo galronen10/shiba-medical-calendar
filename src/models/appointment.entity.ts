@@ -4,7 +4,7 @@ import { IMedicalField } from './medicalField.model';
 export interface IAppointments {
   id: number;
   date: Date;
-  doctor: Pick<IDoctor, 'id' | 'name'>;
+  doctor: IDoctor;
   medicalField: IMedicalField;
 }
 
