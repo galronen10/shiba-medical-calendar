@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React, { FC, useCallback } from 'react';
-import { Text } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { EAppRoutes } from '@/models/routes.model';
 import { useDispatch } from 'react-redux';
@@ -36,12 +36,19 @@ export const HomeScreen: FC = () => {
     [dispatch],
   );
 
+  const openUserAppointment = (): void => {
+    navigation.navigate(EAppRoutes.userAppointments);
+  };
+
   return (
     <View style={styles.container}>
       <Text variant="headlineSmall" style={styles.headlineText}>
         בחר תחום שירות על מנת לקבוע תור ראשון
       </Text>
 
+      <Button mode="contained" onPress={openUserAppointment}>
+        פגישות של המשתמש
+      </Button>
       <SelectMedicalFieldList selectMedicalField={selectMedicalField} />
     </View>
   );

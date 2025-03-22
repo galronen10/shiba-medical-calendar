@@ -6,5 +6,6 @@ export enum EAppRoutes {
   selectField = 'selectField',
   selectDoctor = 'selectDoctor',
   schedulerForm = 'schedulerForm',
+  userAppointments = 'userAppointments',
   selectTime = 'selectTime',
 }

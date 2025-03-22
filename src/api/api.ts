@@ -8,7 +8,7 @@ import {
   signOut,
 } from 'firebase/auth';
 import axios from 'axios';
-import { IAppointmentDTO } from '@/models/appointment.entity';
+import { IAppointmentDTO, IAppointments } from '@/models/appointment.entity';
 
 export const serverURL = process.env.SERVER_URL || 'http://192.168.1.29:3000';
 
@@ -57,6 +57,10 @@ export const api = {
       const res = await axiosInstance.get(
         `${APPOINTMENT_API}/byDateAndDoctor/${doctorId}/${date}`,
       );
+      return res.data;
+    },
+    getByUser: async (userId: string): Promise<IAppointments[]> => {
+      const res = await axiosInstance.get(`${APPOINTMENT_API}/user/${userId}`);
       return res.data;
     },
     setAppointment: async (newAppointment: IAppointmentDTO): Promise<void> => {
