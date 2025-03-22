@@ -1,8 +1,31 @@
 import { FlatList, View } from 'react-native';
 import React, { FC } from 'react';
 import { IDoctor } from '@/models/doctor.model';
-import { Button, Card, Icon } from 'react-native-paper';
-import { styles } from './styles';
+import { Button, Card } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { GenderIcon } from '@/components/common';
+
+export const styles = StyleSheet.create({
+  card: {
+    alignContent: 'center',
+    paddingBottom: 20,
+  },
+  container: {
+    margin: 10,
+  },
+  header: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  username: {
+    alignSelf: 'flex-end',
+    fontSize: 16,
+    fontWeight: 'bold',
+    paddingRight: 6,
+    textAlign: 'right',
+  },
+});
 
 interface IProps {
   doctorsList: IDoctor[];
@@ -21,12 +44,7 @@ export const DoctorsList: FC<IProps> = ({ doctorsList, onDoctorSelect }) => {
               style={styles.header}
               title={item.name}
               titleStyle={styles.username}
-              right={() => (
-                <Icon
-                  source={item.isFemale ? 'human-female' : 'human-male'}
-                  size={20}
-                />
-              )}
+              right={() => <GenderIcon isFemale={item.isFemale} />}
             />
             <Card.Actions>
               <Button onPress={() => onDoctorSelect && onDoctorSelect(item)}>
