@@ -1,8 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { View, Alert, StyleSheet } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
 import { ConfirmationResult, signInWithPhoneNumber } from 'firebase/auth';
 import { auth } from 'config/firebase';
+import PhoneInput from 'react-native-phone-number-input';
+import { toast } from '@/utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,7 +30,14 @@ export const LoginScreen: FC = () => {
     null,
   );
 
+  const phoneInputRef = useRef<PhoneInput>(null);
+
   const handleSendCode = async () => {
+    const checkValid = phoneInputRef.current?.isValidNumber(phoneNumber);
+    if (!checkValid) {
+      toast.error('המספר שהוכנס אינו תקין');
+    }
+
     try {
       const confirmation = await signInWithPhoneNumber(auth, '+16505550101');
       setConfirmResult(confirmation);
@@ -51,16 +60,18 @@ export const LoginScreen: FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login with Phone</Text>
+      <Text style={styles.title}>התחבר בעזרת מספר טלפון</Text>
 
       {!confirmResult ? (
         <>
-          <TextInput
-            label="Phone Number"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            keyboardType="phone-pad"
-            style={styles.input}
+          <PhoneInput
+            ref={phoneInputRef}
+            defaultCode="IL"
+            layout="first"
+            onChangeFormattedText={setPhoneNumber}
+            withDarkTheme
+            withShadow
+            autoFocus
           />
 
           <Button mode="contained" onPress={handleSendCode}>
