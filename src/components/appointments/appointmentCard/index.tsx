@@ -3,17 +3,10 @@ import { IAppointments } from '@/models/appointment.entity';
 import { dateToTimeStringFormatter, dateToStringFormatter } from '@/utils/date';
 import React, { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
-import { Card, Text, Button, Divider } from 'react-native-paper';
+import { Card, Text, Divider } from 'react-native-paper';
+import { AppointmentCardActions } from '../appointmentCardAction';
 
 const styles = StyleSheet.create({
-  actions: {
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-  },
-  cancelButton: {
-    alignSelf: 'center',
-    marginVertical: 5,
-  },
   card: {
     borderRadius: 10,
     height: 'auto',
@@ -40,15 +33,11 @@ const styles = StyleSheet.create({
 
 interface IProps {
   appointment: IAppointments;
+  isPast: boolean;
 }
 
-export const AppointmentCard: React.FC<IProps> = ({
-  appointment: { doctor, medicalField, date, id },
-}) => {
-  const onAddReminder = () => {};
-  const onReschedule = () => {};
-  const onCancel = () => {};
-
+export const AppointmentCard: React.FC<IProps> = ({ appointment, isPast }) => {
+  const { doctor, medicalField, date } = appointment;
   const timeString = useMemo(() => dateToTimeStringFormatter(date), [date]);
   const dateString = useMemo(() => dateToStringFormatter(date), [date]);
 
@@ -69,24 +58,7 @@ export const AppointmentCard: React.FC<IProps> = ({
         >{`בתאריך ${dateString} בשעה ${timeString}`}</Text>
       </Card.Content>
       <Divider />
-      <Card.Actions style={styles.actions}>
-        <Button icon="calendar" onPress={onAddReminder}>
-          הוספת תזכורת
-        </Button>
-        <Button icon="sync" onPress={onReschedule}>
-          שינוי תור
-        </Button>
-      </Card.Actions>
-      <Divider />
-      <Button
-        mode="text"
-        onPress={onCancel}
-        textColor="red"
-        icon="close-circle-outline"
-        style={styles.cancelButton}
-      >
-        ביטול תור
-      </Button>
+      <AppointmentCardActions appointment={appointment} isPast={isPast} />
     </Card>
   );
 };

@@ -23,15 +23,21 @@ export const styles = StyleSheet.create({
 
 interface IProps {
   appointmentsList: IAppointments[];
+  isPast?: boolean;
 }
 
-export const AppointmentsList: FC<IProps> = ({ appointmentsList }) => {
+export const AppointmentsList: FC<IProps> = ({
+  appointmentsList,
+  isPast = false,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.formBody}>
         <FlatList
           data={appointmentsList}
-          renderItem={({ item }) => <AppointmentCard appointment={item} />}
+          renderItem={({ item }) => (
+            <AppointmentCard appointment={item} isPast={isPast} />
+          )}
           keyExtractor={(item) => item.id.toString()}
         />
       </View>

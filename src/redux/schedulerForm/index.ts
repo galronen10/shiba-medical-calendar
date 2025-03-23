@@ -3,12 +3,14 @@ import { RootState } from '..';
 import { IMedicalField } from '@/models/medicalField.model';
 import { IDoctor } from '@/models/doctor.model';
 import { ISchedulerSelectedTime } from '@/models/schedulerForm.model';
+import { IAppointments } from '@/models/appointment.entity';
 
 // Define a type for the slice state
 export interface ISchedulerFormState {
   selectedField?: IMedicalField;
   selectedDoctor?: IDoctor;
   selectedTime?: ISchedulerSelectedTime;
+  appointmentId?: number;
 }
 
 // Define the initial state using that type
@@ -35,6 +37,21 @@ export const schedulerFormSlice = createSlice({
       ...state,
       selectedTime: action.payload,
     }),
+    setFormByAppointment: (
+      _state,
+      action: PayloadAction<{ appointment: IAppointments; isWithId?: boolean }>,
+    ) => {
+      const { appointment, isWithId } = action.payload;
+      const newState: ISchedulerFormState = {
+        selectedField: appointment.medicalField,
+        selectedDoctor: appointment.doctor,
+      };
+      if (isWithId) {
+        newState.appointmentId = appointment.id;
+      }
+
+      return newState;
+    },
     resetForm: () => ({ ...initialState }),
   },
 });
@@ -44,6 +61,7 @@ export const {
   selectMedicalFieldForForm,
   selectDoctorForForm,
   selectTimeForForm,
+  setFormByAppointment,
 } = schedulerFormSlice.actions;
 
 export const selectSchedulerFromState = (

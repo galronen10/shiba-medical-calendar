@@ -46,7 +46,7 @@ export const UserAppointments: FC = () => {
       <AppointmentsList appointmentsList={newAppointments} />
 
       <Text>old</Text>
-      <AppointmentsList appointmentsList={oldAppointments} />
+      <AppointmentsList appointmentsList={oldAppointments} isPast />
     </View>
   );
 };

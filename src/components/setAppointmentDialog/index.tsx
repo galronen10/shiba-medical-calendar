@@ -90,6 +90,9 @@ export const SetAppointmentDialog: FC<IProps> = ({
         ),
       };
 
+      if (selectedFormData.appointmentId)
+        newAppointment.id = selectedFormData.appointmentId;
+
       await api.appointments.setAppointment(newAppointment);
       setIsButtonLoading(false);
       dispatch(resetForm());
