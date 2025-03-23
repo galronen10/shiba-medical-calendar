@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { useAppSelector } from '@/hooks/store';
 import { api } from '@/api';
@@ -8,6 +8,10 @@ import { IAppointments } from '@/models/appointment.entity';
 import { compareAsc } from 'date-fns';
 import { Text } from 'react-native-paper';
 import { AppointmentsList } from '@/components/appointments/appointmentList';
+
+const styles = StyleSheet.create({
+  container: { height: '100%', width: '100%' },
+});
 
 export const UserAppointments: FC = () => {
   const [oldAppointments, setOldAppointments] = useState<IAppointments[]>([]);
@@ -23,10 +27,10 @@ export const UserAppointments: FC = () => {
       const currDate = new Date();
 
       const prevAppointment = appointmentsFromServer.filter(
-        (appointment) => compareAsc(currDate, appointment.date) === -1,
+        (appointment) => compareAsc(currDate, appointment.date) !== -1,
       );
       const nextAppointment = appointmentsFromServer.filter(
-        (appointment) => compareAsc(currDate, appointment.date) !== -1,
+        (appointment) => compareAsc(currDate, appointment.date) === -1,
       );
 
       setOldAppointments(prevAppointment);
@@ -37,12 +41,12 @@ export const UserAppointments: FC = () => {
   }, [userId]);
 
   return (
-    <View>
-      <Text>old</Text>
-      <AppointmentsList appointmentsList={oldAppointments} />
-
+    <View style={styles.container}>
       <Text>new</Text>
       <AppointmentsList appointmentsList={newAppointments} />
+
+      <Text>old</Text>
+      <AppointmentsList appointmentsList={oldAppointments} />
     </View>
   );
 };

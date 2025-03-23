@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
   },
   card: {
     borderRadius: 10,
-    height: 100,
+    height: 'auto',
     margin: 10,
     overflow: 'hidden',
-    width: 200,
+    width: 300,
   },
   details: {
     fontSize: 16,
