@@ -66,5 +66,8 @@ export const api = {
     setAppointment: async (newAppointment: IAppointmentDTO): Promise<void> => {
       await axiosInstance.post(APPOINTMENT_API, newAppointment);
     },
+    deleteById: async (appointmentId: number): Promise<void> => {
+      await axiosInstance.delete(`${APPOINTMENT_API}/${appointmentId}`);
+    },
   },
 };
