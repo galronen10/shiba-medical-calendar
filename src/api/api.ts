@@ -10,7 +10,7 @@ import {
 import axios from 'axios';
 import { IAppointmentDTO, IAppointments } from '@/models/appointment.entity';
 
-export const serverURL = process.env.SERVER_URL || 'http://192.168.68.105:3000';
+export const serverURL = process.env.SERVER_URL || 'http:/192.168.1.29:3000';
 
 export const axiosInstance = axios.create({
   baseURL: serverURL,

@@ -8,16 +8,8 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: '100%',
-    paddingHorizontal: 20,
-    paddingTop: 30,
-    width: '100%',
-  },
-  formBody: {
-    alignContent: 'center',
-    flex: 1,
-    flexDirection: 'column',
     paddingBottom: 30,
+    paddingHorizontal: 20,
   },
 });
 
@@ -32,15 +24,13 @@ export const AppointmentsList: FC<IProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.formBody}>
-        <FlatList
-          data={appointmentsList}
-          renderItem={({ item }) => (
-            <AppointmentCard appointment={item} isPast={isPast} />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      </View>
+      <FlatList
+        data={appointmentsList}
+        renderItem={({ item }) => (
+          <AppointmentCard appointment={item} isPast={isPast} />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
     </View>
   );
 };

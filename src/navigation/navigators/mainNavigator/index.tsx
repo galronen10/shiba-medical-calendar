@@ -5,7 +5,6 @@ import { HomeScreen, LoginScreen, SplashScreen } from '@/screens';
 import { EAppRoutes } from '@/models/routes.model';
 import { SchedulerNavigator } from '../schedulerNavigator';
 import { titleDisplayText } from '@/navigation/models';
-import { UserAppointments } from '@/screens/userAppointments';
 
 export const MainNavigator = () => {
   return (
@@ -22,11 +21,7 @@ export const MainNavigator = () => {
             component={SplashScreen}
             options={{ headerShown: false }}
           />
-          <RootStack.Screen
-            name={EAppRoutes.userAppointments}
-            component={UserAppointments}
-            options={{ headerShown: true }}
-          />
+
           <RootStack.Screen
             name={EAppRoutes.schedulerForm}
             component={SchedulerNavigator}

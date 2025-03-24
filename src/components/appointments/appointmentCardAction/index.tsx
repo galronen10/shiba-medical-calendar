@@ -24,6 +24,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: 300,
   },
+  createButton: {
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    marginVertical: 5,
+  },
   details: {
     fontSize: 16,
     marginVertical: 4,
@@ -85,7 +90,7 @@ export const AppointmentCardActions: React.FC<IProps> = ({
       onPress={onNewSimilarAppointment}
       style={styles.cancelButton}
     >
-      זימון חדש תור נוסף
+      זימון חדש תור
     </Button>
   ) : (
     <>

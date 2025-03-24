@@ -13,12 +13,14 @@ import { compareAsc } from 'date-fns';
 interface AppointmentsState {
   oldAppointments: IAppointments[];
   newAppointments: IAppointments[];
+  isUserHasAppointments: boolean;
 }
 
 // Define the initial state using that type
 const initialState: AppointmentsState = {
   newAppointments: [],
   oldAppointments: [],
+  isUserHasAppointments: false,
 };
 
 export const loadAppointments = createAsyncThunk(
@@ -41,6 +43,8 @@ export const loadAppointments = createAsyncThunk(
     return {
       newAppointments,
       oldAppointments,
+      isUserHasAppointments:
+        !!oldAppointments.length || !!newAppointments.length,
     };
   },
 );
@@ -53,6 +57,7 @@ export const appointmentSlice = createSlice({
     builder.addCase(loadAppointments.fulfilled, (state, action) => {
       state.newAppointments = action.payload.newAppointments;
       state.oldAppointments = action.payload.oldAppointments;
+      state.isUserHasAppointments = action.payload.isUserHasAppointments;
     });
   },
 });
@@ -68,6 +73,11 @@ export const selectOldAppointmentsList = createSelector(
 export const selectNewAppointmentsList = createSelector(
   selectAppointmentState,
   (state: AppointmentsState): IAppointments[] => state.newAppointments,
+);
+
+export const selectIsUserHasAppointments = createSelector(
+  selectAppointmentState,
+  (state: AppointmentsState): boolean => state.isUserHasAppointments,
 );
 
 export default appointmentSlice.reducer;
