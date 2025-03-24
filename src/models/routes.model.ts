@@ -8,4 +8,6 @@ export enum EAppRoutes {
   schedulerForm = 'schedulerForm',
   userAppointments = 'userAppointments',
   selectTime = 'selectTime',
+  auth = 'auth',
+  main = 'main',
 }

@@ -1,9 +1,6 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import { loadAppointments } from '@/redux/appointments';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/redux';
 import { Button } from 'react-native-paper';
 import { UserAppointmentsSection } from '../userAppointmentsSection';
 import { useNavigation } from '@react-navigation/native';
@@ -41,12 +38,7 @@ const styles = StyleSheet.create({
 });
 
 export const UserAppointments: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation();
-
-  useEffect(() => {
-    dispatch(loadAppointments());
-  }, [dispatch]);
 
   const handleNewAppointment = () => {
     navigation.navigate(EAppRoutes.schedulerForm);

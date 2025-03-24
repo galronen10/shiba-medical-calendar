@@ -64,7 +64,7 @@ export const UserAppointmentsSection: FC<IProps> = ({ isPast }) => {
     [isPast, appointmentsList],
   );
 
-  return false ? (
+  return appointmentsList.length ? (
     <View style={styles.section}>
       <Text variant="titleLarge" style={styles.sectionTitle}>
         {title}
