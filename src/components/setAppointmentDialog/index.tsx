@@ -24,6 +24,8 @@ import { selectUserId } from '@/redux/user';
 import { StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
 import { GenderIcon } from '../common';
+import { loadAppointments } from '@/redux/appointments';
+import { AppDispatch } from '@/redux';
 
 const styles = StyleSheet.create({
   bodyText: {
@@ -76,7 +78,7 @@ export const SetAppointmentDialog: FC<IProps> = ({
   );
   const userId: string = useAppSelector(selectUserId);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation();
 
   const onConfirm = async () => {
@@ -96,6 +98,8 @@ export const SetAppointmentDialog: FC<IProps> = ({
       await api.appointments.setAppointment(newAppointment);
       setIsButtonLoading(false);
       dispatch(resetForm());
+      dispatch(loadAppointments());
+
       navigation.navigate(EAppRoutes.home);
     } catch (error: any) {
       toast.error('אירעה שגיאה בתהליך קביעת הפגישה');

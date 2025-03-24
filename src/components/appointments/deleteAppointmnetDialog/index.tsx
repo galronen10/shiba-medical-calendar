@@ -4,6 +4,9 @@ import { styles } from './styles';
 import { Portal, Dialog, Text, Button } from 'react-native-paper';
 import { toast } from '@/utils';
 import { api } from '@/api';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/redux';
+import { loadAppointments } from '@/redux/appointments';
 
 interface IProps {
   isVisible: boolean;
@@ -17,12 +20,15 @@ export const DeleteAppointmentDialog: FC<IProps> = ({
   appointmentId,
 }) => {
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   const onDelete = async () => {
     setIsButtonLoading(true);
     try {
       await api.appointments.deleteById(appointmentId);
       setIsButtonLoading(false);
+      dispatch(loadAppointments());
+
       handleClose();
       toast.success('התור בוטל בהצלחה');
     } catch (error: any) {

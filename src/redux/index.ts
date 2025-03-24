@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './user';
 import schedulerFormReducer from './schedulerForm';
+import appointmentReducer from './appointments';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     schedulerForm: schedulerFormReducer,
+    appointment: appointmentReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
