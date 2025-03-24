@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "533227820991",
+    "project_id": "shiba-medical-calender",
+    "storage_bucket": "shiba-medical-calender.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533227820991:android:828d02d2f9dce5c599b30a",
+        "android_client_info": {
+          "package_name": "com.anonymous.shiba_medical_calendar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBqDSl75Z7tVv3Nk4a6FnhUkOxTYbX3Xk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
