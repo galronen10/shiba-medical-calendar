@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 interface IProps {
   isPast?: boolean;
 }
-export const UserAppointmentsSection: FC<IProps> = ({ isPast }) => {
+export const UserAppointmentsSection: FC<IProps> = ({ isPast = false }) => {
   const appointmentsList: IAppointments[] = useAppSelector(
     isPast ? selectOldAppointmentsList : selectNewAppointmentsList,
   );
@@ -69,7 +69,7 @@ export const UserAppointmentsSection: FC<IProps> = ({ isPast }) => {
       <Text variant="titleLarge" style={styles.sectionTitle}>
         {title}
       </Text>
-      <AppointmentsList appointmentsList={appointmentsList} />
+      <AppointmentsList appointmentsList={appointmentsList} isPast={isPast} />
     </View>
   ) : (
     <View />

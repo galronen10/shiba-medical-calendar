@@ -90,7 +90,7 @@ export const AppointmentCardActions: React.FC<IProps> = ({
       onPress={onNewSimilarAppointment}
       style={styles.cancelButton}
     >
-      זימון חדש תור
+      זימון תור חדש
     </Button>
   ) : (
     <>
