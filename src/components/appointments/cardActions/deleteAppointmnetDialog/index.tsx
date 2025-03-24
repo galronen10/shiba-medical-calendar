@@ -9,14 +9,12 @@ import { AppDispatch } from '@/redux';
 import { loadAppointments } from '@/redux/appointments';
 
 interface IProps {
-  isVisible: boolean;
   handleClose: () => void;
   appointmentId: number;
 }
 
 export const DeleteAppointmentDialog: FC<IProps> = ({
   handleClose,
-  isVisible,
   appointmentId,
 }) => {
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
@@ -39,7 +37,7 @@ export const DeleteAppointmentDialog: FC<IProps> = ({
 
   return (
     <Portal>
-      <Dialog visible={isVisible} onDismiss={handleClose}>
+      <Dialog visible={true} onDismiss={handleClose}>
         <Dialog.Title style={styles.bodyText}>בטל תור</Dialog.Title>
         <Dialog.Content>
           <Text style={styles.bodyText}>האם אתה בטוח שברצונך לבטל תור זה</Text>

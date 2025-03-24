@@ -2,20 +2,17 @@ import { IAppointments } from '@/models/appointment.entity';
 import { EAppRoutes } from '@/models/routes.model';
 import { setFormByAppointment } from '@/redux/schedulerForm';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Card, Button, Divider } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import { DeleteAppointmentDialog } from '../deleteAppointmnetDialog';
+import { AppointmentCardAddReminder } from '../appointmentCardAddReminder';
+import { AppointmentCardDeleteButton } from '../appointmentCardDeleteButton';
 
 const styles = StyleSheet.create({
   actions: {
     justifyContent: 'space-between',
     paddingHorizontal: 10,
-  },
-  cancelButton: {
-    alignSelf: 'center',
-    marginVertical: 5,
   },
   card: {
     borderRadius: 10,
@@ -55,26 +52,14 @@ export const AppointmentCardActions: React.FC<IProps> = ({
   appointment,
   isPast,
 }) => {
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  const onAddReminder = () => {};
 
   const onReschedule = () => {
     dispatch(setFormByAppointment({ appointment, isWithId: true }));
     navigation.navigate(EAppRoutes.schedulerForm, {
       screen: EAppRoutes.selectTime,
     });
-  };
-
-  const closeDeleteDialog = (): void => {
-    setShowDeleteDialog(false);
-  };
-
-  const openDeleteDialog = (): void => {
-    setShowDeleteDialog(true);
   };
 
   const onNewSimilarAppointment = () => {
@@ -88,35 +73,20 @@ export const AppointmentCardActions: React.FC<IProps> = ({
     <Button
       mode="contained"
       onPress={onNewSimilarAppointment}
-      style={styles.cancelButton}
+      style={styles.createButton}
     >
       זימון תור חדש
     </Button>
   ) : (
     <>
       <Card.Actions style={styles.actions}>
-        <Button icon="calendar" onPress={onAddReminder}>
-          הוספת תזכורת
-        </Button>
+        <AppointmentCardAddReminder appointment={appointment} />
         <Button icon="sync" onPress={onReschedule}>
           שינוי תור
         </Button>
       </Card.Actions>
       <Divider />
-      <Button
-        mode="text"
-        onPress={openDeleteDialog}
-        textColor="red"
-        icon="close-circle-outline"
-        style={styles.cancelButton}
-      >
-        ביטול תור
-      </Button>
-      <DeleteAppointmentDialog
-        handleClose={closeDeleteDialog}
-        isVisible={showDeleteDialog}
-        appointmentId={appointment.id}
-      />
+      <AppointmentCardDeleteButton appointmentId={appointment.id} />
     </>
   );
 };

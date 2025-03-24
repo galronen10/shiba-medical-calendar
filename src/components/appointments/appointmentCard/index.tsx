@@ -4,7 +4,7 @@ import { dateToTimeStringFormatter, dateToStringFormatter } from '@/utils/date';
 import React, { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 import { Card, Text, Divider } from 'react-native-paper';
-import { AppointmentCardActions } from '../appointmentCardAction';
+import { AppointmentCardActions } from '../cardActions';
 
 const styles = StyleSheet.create({
   card: {
@@ -33,10 +33,15 @@ const styles = StyleSheet.create({
 
 interface IProps {
   appointment: IAppointments;
-  isPast: boolean;
+  isPast?: boolean;
+  hideActions?: boolean;
 }
 
-export const AppointmentCard: React.FC<IProps> = ({ appointment, isPast }) => {
+export const AppointmentCard: React.FC<IProps> = ({
+  appointment,
+  isPast = false,
+  hideActions = false,
+}) => {
   const { doctor, medicalField, date } = appointment;
   const timeString = useMemo(() => dateToTimeStringFormatter(date), [date]);
   const dateString = useMemo(() => dateToStringFormatter(date), [date]);
@@ -58,7 +63,9 @@ export const AppointmentCard: React.FC<IProps> = ({ appointment, isPast }) => {
         >{`בתאריך ${dateString} בשעה ${timeString}`}</Text>
       </Card.Content>
       <Divider />
-      <AppointmentCardActions appointment={appointment} isPast={isPast} />
+      {!hideActions && (
+        <AppointmentCardActions appointment={appointment} isPast={isPast} />
+      )}
     </Card>
   );
 };
