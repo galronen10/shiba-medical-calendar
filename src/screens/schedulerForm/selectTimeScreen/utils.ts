@@ -1,5 +1,5 @@
 import { dateToTimeStringFormatter } from '@/utils/date';
-import { addMinutes, setHours, setMinutes } from 'date-fns';
+import { addMinutes, compareAsc, setHours, setMinutes } from 'date-fns';
 import { LocaleConfig } from 'react-native-calendars';
 
 const daysOfWeek = [0, 1, 2, 3, 4, 5, 6];
@@ -9,17 +9,23 @@ export const findMissingDaysInWeek = (daysArray: number[]) =>
 export const generateTimeSlots = (
   duration: number,
   existingSlots: Date[],
+  selectedDate: string,
 ): string[] => {
   const slots = [];
   const existingSlotsToString: string[] = existingSlots.map((slot) =>
     dateToTimeStringFormatter(slot),
   );
 
-  let time = setMinutes(setHours(new Date(), 9), 0); // Start at 9:00 AM
+  const currDate = new Date();
+
+  let time = setMinutes(setHours(new Date(selectedDate), 9), 0); // Start at 9:00 AM
   while (time.getHours() < 17) {
     // Until 5:00 PM
     const slotString = dateToTimeStringFormatter(time);
-    if (!existingSlotsToString.includes(slotString)) {
+    if (
+      compareAsc(time, currDate) === 1 &&
+      !existingSlotsToString.includes(slotString)
+    ) {
       slots.push(dateToTimeStringFormatter(time));
     }
     time = addMinutes(time, duration);

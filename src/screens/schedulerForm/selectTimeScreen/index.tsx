@@ -8,7 +8,7 @@ import {
 } from '@/redux/schedulerForm';
 import { useAppSelector } from '@/hooks/store';
 import { IDoctor } from '@/models/doctor.model';
-import { addDays } from 'date-fns';
+import { addDays, addMinutes } from 'date-fns';
 import { Calendar, CalendarProvider, DateData } from 'react-native-calendars';
 import { dateToStringFormatter } from '@/utils/date';
 import { findMissingDaysInWeek, generateTimeSlots } from './utils';
@@ -43,9 +43,8 @@ const styles = StyleSheet.create({
 });
 
 export const SelectTimeScreen: FC = () => {
-  const [selectedDate, setSelectedDate] = useState<string>(
-    dateToStringFormatter(new Date()),
-  );
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [minDate, setMinDate] = useState<string>('');
   const [selectedTime, setSelectedTime] = useState<string>();
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -58,7 +57,7 @@ export const SelectTimeScreen: FC = () => {
 
   useEffect(() => {
     const queryData = async () => {
-      if (selectedDoctor) {
+      if (selectedDoctor && selectedDate) {
         const existingSlots: Date[] =
           await api.appointments.getExistingAppointmentsByDateAndDoctor(
             selectedDoctor.id,
@@ -67,6 +66,7 @@ export const SelectTimeScreen: FC = () => {
         const timeSlots = generateTimeSlots(
           selectedDoctor.appointmentDuration,
           existingSlots,
+          selectedDate,
         );
         setAvailableSlots(timeSlots);
         setSelectedTime(timeSlots.length ? timeSlots[0] : undefined);
@@ -75,6 +75,20 @@ export const SelectTimeScreen: FC = () => {
 
     queryData();
   }, [selectedDoctor, selectedDate]);
+
+  useEffect(() => {
+    const currDate = new Date();
+
+    const dateToFormat =
+      currDate.getHours() > 17 ||
+      addMinutes(currDate, selectedDoctor!.appointmentDuration).getHours() < 17
+        ? addDays(currDate, 1)
+        : currDate;
+
+    const formattedDate = dateToStringFormatter(dateToFormat);
+    setMinDate(formattedDate);
+    setSelectedDate(formattedDate);
+  }, []);
 
   const selectTime = () => {
     if (selectedTime) {
@@ -93,11 +107,6 @@ export const SelectTimeScreen: FC = () => {
   const onDayPressed = useCallback((date: DateData) => {
     setSelectedDate(date.dateString);
   }, []);
-
-  const currentDate: string = useMemo(
-    () => dateToStringFormatter(new Date()),
-    [],
-  );
 
   const maxDate: string = useMemo(
     () => dateToStringFormatter(addDays(new Date(), 35)),
@@ -124,7 +133,7 @@ export const SelectTimeScreen: FC = () => {
         <CalendarProvider date={selectedDate}>
           <Calendar
             firstDay={0}
-            minDate={currentDate}
+            minDate={minDate}
             maxDate={maxDate}
             disabledByWeekDays={daysNotWorking}
             hideExtraDays={false}
