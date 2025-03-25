@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
+import { ActivityIndicator } from 'react-native-paper';
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width / 3.5;
@@ -51,10 +52,11 @@ interface IProps {
   timeSlots: string[];
   selectedTime?: string;
   onTimeUpdate: (time: string) => void;
+  isLoading: boolean;
 }
 
 export const TimePicker: FC<IProps> = memo(
-  ({ onTimeUpdate, timeSlots, selectedTime }) => {
+  ({ onTimeUpdate, timeSlots, selectedTime, isLoading }) => {
     const listRef = useRef<FlatList>(null);
 
     const scrollToIndex = useCallback((item: string) => {
@@ -74,52 +76,59 @@ export const TimePicker: FC<IProps> = memo(
       }
     }, []);
 
-    return (
-      <View style={styles.container}>
-        {timeSlots.length ? (
-          <FlatList
-            ref={listRef}
-            data={timeSlots}
-            inverted={true}
-            keyExtractor={(item) => item}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            snapToAlignment="center"
-            snapToInterval={ITEM_WIDTH}
-            decelerationRate="fast"
-            onMomentumScrollEnd={(event) => {
-              const index = Math.round(
-                event.nativeEvent.contentOffset.x / ITEM_WIDTH,
-              );
-              onTimeUpdate(timeSlots[index]);
-            }}
-            contentContainerStyle={styles.timeList}
-            getItemLayout={(_, index) => ({
-              length: ITEM_WIDTH,
-              offset: ITEM_WIDTH * index,
-              index,
-            })}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => scrollToIndex(item)}
-                style={styles.timeItem}
-              >
-                <Text
-                  style={
-                    item === selectedTime
-                      ? styles.selectedTimeText
-                      : styles.timeText
-                  }
+    if (isLoading) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator size={42.5} />
+        </View>
+      );
+    } else
+      return (
+        <View style={styles.container}>
+          {timeSlots.length ? (
+            <FlatList
+              ref={listRef}
+              data={timeSlots}
+              inverted={true}
+              keyExtractor={(item) => item}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              snapToAlignment="center"
+              snapToInterval={ITEM_WIDTH}
+              decelerationRate="fast"
+              onMomentumScrollEnd={(event) => {
+                const index = Math.round(
+                  event.nativeEvent.contentOffset.x / ITEM_WIDTH,
+                );
+                onTimeUpdate(timeSlots[index]);
+              }}
+              contentContainerStyle={styles.timeList}
+              getItemLayout={(_, index) => ({
+                length: ITEM_WIDTH,
+                offset: ITEM_WIDTH * index,
+                index,
+              })}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() => scrollToIndex(item)}
+                  style={styles.timeItem}
                 >
-                  {item}
-                </Text>
-              </TouchableOpacity>
-            )}
-          />
-        ) : (
-          <Text style={styles.noSlotsText}>לא קיימים זמנים אפשריים</Text>
-        )}
-      </View>
-    );
+                  <Text
+                    style={
+                      item === selectedTime
+                        ? styles.selectedTimeText
+                        : styles.timeText
+                    }
+                  >
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            />
+          ) : (
+            <Text style={styles.noSlotsText}>לא קיימים זמנים אפשריים</Text>
+          )}
+        </View>
+      );
   },
 );

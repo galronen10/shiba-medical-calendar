@@ -48,6 +48,7 @@ export const SelectTimeScreen: FC = () => {
   const [selectedTime, setSelectedTime] = useState<string>();
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();
 
@@ -57,6 +58,7 @@ export const SelectTimeScreen: FC = () => {
 
   useEffect(() => {
     const queryData = async () => {
+      setIsLoading(true);
       try {
         if (selectedDoctor && selectedDate) {
           const timeSlots: string[] =
@@ -71,6 +73,7 @@ export const SelectTimeScreen: FC = () => {
       } catch (error) {
         toast.error(' שגיאה בטעינת התורים האפשריים אנא נסה שנית');
       }
+      setIsLoading(false);
     };
 
     queryData();
@@ -144,6 +147,7 @@ export const SelectTimeScreen: FC = () => {
         {selectedDate && (
           <View style={styles.timePicker}>
             <TimePicker
+              isLoading={isLoading}
               onTimeUpdate={setSelectedTime}
               timeSlots={availableSlots}
               selectedTime={selectedTime}
