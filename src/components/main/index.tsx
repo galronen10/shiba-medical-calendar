@@ -6,7 +6,7 @@ export const Main: FC = () => {
   return (
     <>
       <AppNavigator />
-      <Toast />
+      <Toast visibilityTime={5000} />
     </>
   );
 };

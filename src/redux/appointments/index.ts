@@ -14,6 +14,7 @@ interface AppointmentsState {
   oldAppointments: IAppointments[];
   newAppointments: IAppointments[];
   isUserHasAppointments: boolean;
+  loading: boolean;
 }
 
 // Define the initial state using that type
@@ -21,11 +22,12 @@ const initialState: AppointmentsState = {
   newAppointments: [],
   oldAppointments: [],
   isUserHasAppointments: false,
+  loading: false,
 };
 
 export const loadAppointments = createAsyncThunk(
   'appointments/load',
-  async (_, { getState }): Promise<AppointmentsState> => {
+  async (_, { getState }): Promise<Omit<AppointmentsState, 'loading'>> => {
     const state = getState() as RootState;
     const userId = selectUserId(state);
 
@@ -59,11 +61,19 @@ export const appointmentSlice = createSlice({
     resetAppointment: () => ({ ...initialState }),
   },
   extraReducers: (builder) => {
-    builder.addCase(loadAppointments.fulfilled, (state, action) => {
-      state.newAppointments = action.payload.newAppointments;
-      state.oldAppointments = action.payload.oldAppointments;
-      state.isUserHasAppointments = action.payload.isUserHasAppointments;
-    });
+    builder
+      .addCase(loadAppointments.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loadAppointments.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(loadAppointments.fulfilled, (state, action) => {
+        state.loading = false;
+        state.newAppointments = action.payload.newAppointments;
+        state.oldAppointments = action.payload.oldAppointments;
+        state.isUserHasAppointments = action.payload.isUserHasAppointments;
+      });
   },
 });
 
@@ -85,6 +95,11 @@ export const selectNewAppointmentsList = createSelector(
 export const selectIsUserHasAppointments = createSelector(
   selectAppointmentState,
   (state: AppointmentsState): boolean => state.isUserHasAppointments,
+);
+
+export const selectIsAppointmentsLoading = createSelector(
+  selectAppointmentState,
+  (state: AppointmentsState): boolean => state.loading,
 );
 
 export default appointmentSlice.reducer;
