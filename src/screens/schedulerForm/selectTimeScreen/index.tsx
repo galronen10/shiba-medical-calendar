@@ -11,7 +11,7 @@ import { IDoctor } from '@/models/doctor.model';
 import { addDays } from 'date-fns';
 import { Calendar, CalendarProvider, DateData } from 'react-native-calendars';
 import { dateToStringFormatter, getClosestDate } from '@/utils/date';
-import { findMissingDaysInWeek, generateTimeSlots } from './utils';
+import { findMissingDaysInWeek } from './utils';
 import { TimePicker } from '@/components/timePicker';
 import { Button } from 'react-native-paper';
 import { api } from '@/api';
@@ -59,16 +59,12 @@ export const SelectTimeScreen: FC = () => {
     const queryData = async () => {
       try {
         if (selectedDoctor && selectedDate) {
-          const existingSlots: Date[] =
-            await api.appointments.getExistingAppointmentsByDateAndDoctor(
+          const timeSlots: string[] =
+            await api.appointments.getAvailableTimeSlotsByDateAndDoctor(
               selectedDoctor.id,
               selectedDate,
             );
-          const timeSlots = generateTimeSlots(
-            selectedDoctor.appointmentDuration,
-            existingSlots,
-            selectedDate,
-          );
+
           setAvailableSlots(timeSlots);
           setSelectedTime(timeSlots.length ? timeSlots[0] : undefined);
         }

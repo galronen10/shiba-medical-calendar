@@ -38,12 +38,12 @@ export const api = {
     },
   },
   appointments: {
-    getExistingAppointmentsByDateAndDoctor: async (
+    getAvailableTimeSlotsByDateAndDoctor: async (
       doctorId: number,
       date: string,
-    ): Promise<Date[]> => {
+    ): Promise<string[]> => {
       const res = await axiosInstance.get(
-        `${APPOINTMENT_API}/byDateAndDoctor/${doctorId}/${date}`,
+        `${APPOINTMENT_API}/availableTimeSlots/${doctorId}/${date}`,
       );
       return res.data;
     },
