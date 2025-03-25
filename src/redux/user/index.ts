@@ -3,38 +3,30 @@ import { RootState } from '..';
 import { IUser } from '@/models/user.model';
 
 interface UserState {
-  userData: IUser;
+  userData?: IUser;
 }
 
-const initialState: UserState = {
-  userData: {
-    id: 's5JdLuSGt6gMh4XC5JBPJyMtvlY2',
-    name: 'גל',
-    phone: '+972522287603',
-  },
-};
+const initialState: UserState = {};
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    updateUser: (state, action: PayloadAction<Partial<IUser>>) => {
-      return {
-        ...state,
-        userData: { ...state.userData, ...action.payload },
-      };
-    },
+    login: (_state, action: PayloadAction<IUser>) => ({
+      userData: { ...action.payload },
+    }),
     logout: () => ({ ...initialState }),
   },
 });
 
-export const { updateUser, logout } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 
-export const selectUser = (state: RootState): IUser => state.user.userData;
+export const selectUser = (state: RootState): IUser | undefined =>
+  state.user.userData;
 
 export const selectUserId = createSelector(
   selectUser,
-  (user: IUser): string => user.id,
+  (user?: IUser): number | undefined => user?.id,
 );
 
 export default userSlice.reducer;

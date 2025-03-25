@@ -1,14 +1,8 @@
 import { IDoctor } from '@/models/doctor.model';
 import { IMedicalField } from '@/models/medicalField.model';
-import { auth } from 'config/firebase';
-import {
-  UserCredential,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from 'firebase/auth';
 import axios from 'axios';
 import { IAppointmentDTO, IAppointments } from '@/models/appointment.entity';
+import { IUser } from '@/models/user.model';
 
 export const serverURL = process.env.SERVER_URL || 'http:/192.168.1.29:3000';
 
@@ -24,18 +18,12 @@ export const axiosInstance = axios.create({
 const APPOINTMENT_API = '/appointments';
 const DOCTOR_API = '/doctors';
 const MEDICAL_FIELD_API = '/medicalFields';
+const USER_API = '/user';
 
 export const api = {
   auth: {
-    register: async (data): Promise<void> => {
-      const userCredential: UserCredential =
-        await createUserWithEmailAndPassword(auth, data.email, data.password);
-
-      const { uid } = userCredential.user;
-    },
-    login: async (email: string, password: string): Promise<UserCredential> =>
-      signInWithEmailAndPassword(auth, email, password),
-    logout: async (): Promise<void> => signOut(auth),
+    login: async (phone: string): Promise<IUser> =>
+      (await axiosInstance.get(`${USER_API}/login/${phone}`)).data,
   },
   medicalField: {
     getAll: async (): Promise<IMedicalField[]> => {
@@ -59,7 +47,7 @@ export const api = {
       );
       return res.data;
     },
-    getByUser: async (userId: string): Promise<IAppointments[]> => {
+    getByUser: async (userId: number): Promise<IAppointments[]> => {
       const res = await axiosInstance.get(`${APPOINTMENT_API}/user/${userId}`);
       return res.data;
     },

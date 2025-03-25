@@ -11,6 +11,6 @@ export interface IAppointments {
 export interface IAppointmentDTO {
   date: Date;
   doctorId: number;
-  userId: string;
+  userId: number;
   id?: number;
 }

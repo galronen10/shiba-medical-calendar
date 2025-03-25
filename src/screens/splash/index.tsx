@@ -12,7 +12,7 @@ export const SplashScreen: FC = () => {
       navigation.reset({
         index: 0,
         // routes: [{ name: user ? EAppRoutes.home : EAppRoutes.login }],
-        routes: [{ name: EAppRoutes.main }],
+        routes: [{ name: EAppRoutes.auth }],
       });
     });
 

@@ -49,7 +49,7 @@ export const SetAppointmentDialog: FC<IProps> = ({
   const selectedFormData: ISchedulerFormState = useAppSelector(
     selectSchedulerFromState,
   );
-  const userId: string = useAppSelector(selectUserId);
+  const userId: number = useAppSelector(selectUserId)!;
 
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation();

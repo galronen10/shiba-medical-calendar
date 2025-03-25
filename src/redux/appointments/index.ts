@@ -28,6 +28,9 @@ export const loadAppointments = createAsyncThunk(
   async (_, { getState }): Promise<AppointmentsState> => {
     const state = getState() as RootState;
     const userId = selectUserId(state);
+
+    if (!userId) return initialState;
+
     const appointmentsFromServer: IAppointments[] =
       await api.appointments.getByUser(userId);
 
