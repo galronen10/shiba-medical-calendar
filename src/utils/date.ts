@@ -1,10 +1,14 @@
-import { addDays, addMinutes, format, getDay, min } from 'date-fns';
+import { addDays, addMinutes, format, getDay, min, parse } from 'date-fns';
 
 export const dateFormatterWithTime = (date: string | Date) =>
   format(new Date(date), 'HH:mm - dd.MM.yyyy');
 
 export const dateToStringFormatter = (date: Date) => format(date, 'yyyy-MM-dd');
+
 export const dateToTimeStringFormatter = (date: Date) => format(date, 'H:mm');
+
+export const parseDateFromTimeAndDateString = (date: string, time: string) =>
+  parse(`${date} ${time}`, 'yyyy-MM-dd H:mm', new Date());
 
 export const getClosestDate = (days: number[], duration: number): Date => {
   const today = new Date();

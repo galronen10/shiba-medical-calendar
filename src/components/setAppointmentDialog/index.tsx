@@ -19,6 +19,7 @@ import Colors from '@/constants/colors';
 import { loadAppointments } from '@/redux/appointments';
 import { AppDispatch } from '@/redux';
 import { BasicAppointmentDisplay } from '../appointments/basicAppointmentDisplay';
+import { parseDateFromTimeAndDateString } from '@/utils/date';
 
 const styles = StyleSheet.create({
   bodyText: {
@@ -56,25 +57,27 @@ export const SetAppointmentDialog: FC<IProps> = ({
 
   const onConfirm = async () => {
     setIsButtonLoading(true);
+    const appointmentDate = parseDateFromTimeAndDateString(
+      selectedFormData.selectedTime!.date,
+      selectedFormData.selectedTime!.time,
+    );
+
+    const newAppointment: IAppointmentDTO = {
+      userId,
+      doctorId: selectedFormData.selectedDoctor!.id,
+      date: appointmentDate,
+    };
+
+    if (selectedFormData.appointmentId)
+      newAppointment.id = selectedFormData.appointmentId;
+
     try {
-      const newAppointment: IAppointmentDTO = {
-        userId,
-        doctorId: selectedFormData.selectedDoctor!.id,
-        date: new Date(
-          `${selectedFormData.selectedTime!.date}T${selectedFormData.selectedTime!.time}:00Z`,
-        ),
-      };
-
-      if (selectedFormData.appointmentId)
-        newAppointment.id = selectedFormData.appointmentId;
-
       await api.appointments.setAppointment(newAppointment);
       setIsButtonLoading(false);
       toast.success('התור נקבע בהצלחה');
+      navigation.navigate(EAppRoutes.home);
       dispatch(resetForm());
       dispatch(loadAppointments());
-
-      navigation.navigate(EAppRoutes.home);
     } catch (error: any) {
       toast.error('אירעה שגיאה בתהליך קביעת הפגישה');
       setIsButtonLoading(false);
@@ -86,11 +89,13 @@ export const SetAppointmentDialog: FC<IProps> = ({
       <Dialog visible={isVisible} onDismiss={handleClose}>
         <Dialog.Title style={styles.bodyText}>קביעת תור</Dialog.Title>
         <Dialog.Content>
-          <BasicAppointmentDisplay
-            doctor={selectedFormData.selectedDoctor!}
-            medicalField={selectedFormData.selectedField!}
-            time={selectedFormData.selectedTime!}
-          />
+          {selectedFormData && (
+            <BasicAppointmentDisplay
+              doctor={selectedFormData.selectedDoctor!}
+              medicalField={selectedFormData.selectedField!}
+              time={selectedFormData.selectedTime!}
+            />
+          )}
         </Dialog.Content>
         <Dialog.Actions>
           <Button
