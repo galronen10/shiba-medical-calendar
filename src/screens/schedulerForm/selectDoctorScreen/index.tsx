@@ -14,6 +14,7 @@ import { IDoctor } from '@/models/doctor.model';
 import { EAppRoutes } from '@/models/routes.model';
 import { api } from '@/api';
 import { DoctorsList } from '@/components/doctors';
+import { toast } from '@/utils';
 
 export const SelectDoctorScreen: FC = () => {
   const [doctors, setDoctors] = useState<IDoctor[]>([]);
@@ -26,11 +27,15 @@ export const SelectDoctorScreen: FC = () => {
 
   useEffect(() => {
     const queryData = async () => {
-      const doctorsFromServer: IDoctor[] = await api.doctor.getByMedicalFieldId(
-        selectedMedicalField!.id,
-      );
+      try {
+        const doctorsFromServer: IDoctor[] =
+          await api.doctor.getByMedicalFieldId(selectedMedicalField!.id);
 
-      setDoctors(doctorsFromServer);
+        setDoctors(doctorsFromServer);
+      } catch (error) {
+        toast.error(' שגיאה בטעינת רשימת הרופאים אנא בחר תחום בשנית');
+        navigation.goBack();
+      }
     };
 
     if (selectedMedicalField) queryData();

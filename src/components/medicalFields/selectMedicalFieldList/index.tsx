@@ -8,17 +8,25 @@ import { MedicalFieldCard } from '../medicalFieldCard';
 
 interface IProps {
   selectMedicalField: (medicalField: IMedicalField) => void;
+  handleLoadError: () => void;
 }
 
-export const SelectMedicalFieldList: FC<IProps> = ({ selectMedicalField }) => {
+export const SelectMedicalFieldList: FC<IProps> = ({
+  selectMedicalField,
+  handleLoadError,
+}) => {
   const [medicalFields, setMedicalFields] = useState<IMedicalField[]>([]);
 
   useEffect(() => {
     const queryData = async () => {
-      const medicalFieldFromServer: IMedicalField[] =
-        await api.medicalField.getAll();
+      try {
+        const medicalFieldFromServer: IMedicalField[] =
+          await api.medicalField.getAll();
 
-      setMedicalFields(medicalFieldFromServer);
+        setMedicalFields(medicalFieldFromServer);
+      } catch {
+        handleLoadError();
+      }
     };
 
     queryData();

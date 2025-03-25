@@ -57,19 +57,23 @@ export const SelectTimeScreen: FC = () => {
 
   useEffect(() => {
     const queryData = async () => {
-      if (selectedDoctor && selectedDate) {
-        const existingSlots: Date[] =
-          await api.appointments.getExistingAppointmentsByDateAndDoctor(
-            selectedDoctor.id,
+      try {
+        if (selectedDoctor && selectedDate) {
+          const existingSlots: Date[] =
+            await api.appointments.getExistingAppointmentsByDateAndDoctor(
+              selectedDoctor.id,
+              selectedDate,
+            );
+          const timeSlots = generateTimeSlots(
+            selectedDoctor.appointmentDuration,
+            existingSlots,
             selectedDate,
           );
-        const timeSlots = generateTimeSlots(
-          selectedDoctor.appointmentDuration,
-          existingSlots,
-          selectedDate,
-        );
-        setAvailableSlots(timeSlots);
-        setSelectedTime(timeSlots.length ? timeSlots[0] : undefined);
+          setAvailableSlots(timeSlots);
+          setSelectedTime(timeSlots.length ? timeSlots[0] : undefined);
+        }
+      } catch (error) {
+        toast.error(' שגיאה בטעינת התורים האפשריים אנא נסה שנית');
       }
     };
 

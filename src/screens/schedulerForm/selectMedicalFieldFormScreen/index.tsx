@@ -6,6 +6,7 @@ import { IMedicalField } from '@/models/medicalField.model';
 import { useNavigation } from '@react-navigation/native';
 import { EAppRoutes } from '@/models/routes.model';
 import { SelectMedicalFieldList } from '@/components/medicalFields';
+import { toast } from '@/utils';
 
 export const SelectMedicalFieldFormScreen: FC = () => {
   const dispatch = useDispatch();
@@ -19,5 +20,17 @@ export const SelectMedicalFieldFormScreen: FC = () => {
     [dispatch],
   );
 
-  return <SelectMedicalFieldList selectMedicalField={selectMedicalField} />;
+  const handleLoadError = () => {
+    toast.error(
+      ' שגיאה בטעינת תחומי הרפואה אנא נסה להתחיל את תהליך בשנית בשנית',
+    );
+    navigation.goBack();
+  };
+
+  return (
+    <SelectMedicalFieldList
+      selectMedicalField={selectMedicalField}
+      handleLoadError={handleLoadError}
+    />
+  );
 };
