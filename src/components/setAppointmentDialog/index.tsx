@@ -1,13 +1,6 @@
 /* eslint-disable react-native/no-raw-text */
 import React, { FC, useState } from 'react';
-import {
-  Portal,
-  Dialog,
-  Text,
-  Button,
-  Card,
-  Divider,
-} from 'react-native-paper';
+import { Portal, Dialog, Text, Button } from 'react-native-paper';
 import { toast } from '@/utils';
 import { useAppSelector } from '@/hooks/store';
 import {
@@ -23,9 +16,9 @@ import { IAppointmentDTO } from '@/models/appointment.entity';
 import { selectUserId } from '@/redux/user';
 import { StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
-import { GenderIcon } from '../common';
 import { loadAppointments } from '@/redux/appointments';
 import { AppDispatch } from '@/redux';
+import { BasicAppointmentDisplay } from '../appointments/basicAppointmentDisplay';
 
 const styles = StyleSheet.create({
   bodyText: {
@@ -36,30 +29,10 @@ const styles = StyleSheet.create({
     elevation: 2,
     padding: 5,
   },
-  card: {
-    borderRadius: 10,
-    margin: 10,
-    overflow: 'hidden',
-    textAlign: 'right',
-  },
-  details: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginVertical: 4,
-  },
-  subTitle: {
-    fontSize: 14,
-    textAlign: 'right',
-  },
   textStyle: {
     color: Colors.background,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'right',
   },
 });
 
@@ -112,28 +85,11 @@ export const SetAppointmentDialog: FC<IProps> = ({
       <Dialog visible={isVisible} onDismiss={handleClose}>
         <Dialog.Title style={styles.bodyText}>קביעת תור</Dialog.Title>
         <Dialog.Content>
-          <Card style={styles.card}>
-            <Card.Title
-              title={selectedFormData.selectedDoctor?.name}
-              titleStyle={styles.title}
-              subtitleStyle={styles.subTitle}
-              subtitle={`תחום שירות: ${selectedFormData.selectedField?.name}`}
-              right={() => (
-                <GenderIcon
-                  isFemale={!!selectedFormData.selectedDoctor?.isFemale}
-                />
-              )}
-            />
-            <Divider />
-            <Card.Content>
-              <Text style={styles.details}>
-                ביקור ב{selectedFormData.selectedDoctor?.clinicName}
-              </Text>
-              <Text
-                style={styles.details}
-              >{`בתאריך ${selectedFormData.selectedTime?.date} בשעה ${selectedFormData.selectedTime?.time}`}</Text>
-            </Card.Content>
-          </Card>
+          <BasicAppointmentDisplay
+            doctor={selectedFormData.selectedDoctor!}
+            medicalField={selectedFormData.selectedField!}
+            time={selectedFormData.selectedTime!}
+          />
         </Dialog.Content>
         <Dialog.Actions>
           <Button

@@ -1,12 +1,14 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { useState, useEffect, FC, useMemo } from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
 import * as Calendar from 'expo-calendar';
 import { Button, Dialog, Portal, Text } from 'react-native-paper';
 import { IAppointments } from '@/models/appointment.entity';
-import { AppointmentCard } from '../../appointmentCard';
 import { toast } from '@/utils';
 import { addMinutes } from 'date-fns';
 import Colors from '@/constants/colors';
+import { BasicAppointmentDisplay } from '../../basicAppointmentDisplay';
+import { ISchedulerSelectedTime } from '@/models/schedulerForm.model';
+import { dateToStringFormatter, dateToTimeStringFormatter } from '@/utils/date';
 
 const styles = StyleSheet.create({
   appointmentContainer: {
@@ -78,6 +80,14 @@ export const AddToCalendarDialog: FC<IProps> = ({
     Linking.openSettings();
   };
 
+  const dateForDisplay: ISchedulerSelectedTime = useMemo(
+    () => ({
+      date: dateToStringFormatter(appointment.date),
+      time: dateToTimeStringFormatter(appointment.date),
+    }),
+    [appointment.date],
+  );
+
   return (
     <Portal>
       <Dialog visible={true} onDismiss={handleClose}>
@@ -87,7 +97,11 @@ export const AddToCalendarDialog: FC<IProps> = ({
             <>
               <Text>האם אתה רוצה להוסיף תזכורת לתור</Text>
               <View style={styles.appointmentContainer}>
-                <AppointmentCard appointment={appointment} hideActions />
+                <BasicAppointmentDisplay
+                  doctor={appointment.doctor}
+                  medicalField={appointment.medicalField}
+                  time={dateForDisplay}
+                />
               </View>
             </>
           ) : (
