@@ -8,9 +8,9 @@ import {
 } from '@/redux/schedulerForm';
 import { useAppSelector } from '@/hooks/store';
 import { IDoctor } from '@/models/doctor.model';
-import { addDays, addMinutes } from 'date-fns';
+import { addDays } from 'date-fns';
 import { Calendar, CalendarProvider, DateData } from 'react-native-calendars';
-import { dateToStringFormatter } from '@/utils/date';
+import { dateToStringFormatter, getClosestDate } from '@/utils/date';
 import { findMissingDaysInWeek, generateTimeSlots } from './utils';
 import { TimePicker } from '@/components/timePicker';
 import { Button } from 'react-native-paper';
@@ -77,13 +77,8 @@ export const SelectTimeScreen: FC = () => {
   }, [selectedDoctor, selectedDate]);
 
   useEffect(() => {
-    const currDate = new Date();
-
-    const dateToFormat =
-      currDate.getHours() > 17 ||
-      addMinutes(currDate, selectedDoctor!.appointmentDuration).getHours() < 17
-        ? addDays(currDate, 1)
-        : currDate;
+    const { appointmentDuration, workingDays } = selectedDoctor!;
+    const dateToFormat: Date = getClosestDate(workingDays, appointmentDuration);
 
     const formattedDate = dateToStringFormatter(dateToFormat);
     setMinDate(formattedDate);
