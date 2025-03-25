@@ -70,6 +70,7 @@ export const SetAppointmentDialog: FC<IProps> = ({
 
       await api.appointments.setAppointment(newAppointment);
       setIsButtonLoading(false);
+      toast.success('התור נקבע בהצלחה');
       dispatch(resetForm());
       dispatch(loadAppointments());
 
