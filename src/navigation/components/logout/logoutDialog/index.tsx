@@ -3,12 +3,11 @@ import React, { FC, useState } from 'react';
 import { styles } from './styles';
 import { Portal, Dialog, Text, Button } from 'react-native-paper';
 import { toast } from '@/utils';
-import { api } from '@/api';
 import { EAppRoutes } from '@/models/routes.model';
 import { logout } from '@/redux/user';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { resetReports } from '@/redux/schedulerForm';
+import { resetAppointment } from '@/redux/appointments';
 
 interface ILogoutDialogProps {
   isVisible: boolean;
@@ -27,14 +26,13 @@ export const LogoutDialog: FC<ILogoutDialogProps> = ({
   const onLogout = async () => {
     setIsButtonLoading(true);
     try {
-      await api.auth.logout();
       dispatch(logout());
-      dispatch(resetReports());
+      dispatch(resetAppointment());
       setIsButtonLoading(false);
       handleClose();
       navigation.reset({
         index: 0,
-        routes: [{ name: EAppRoutes.logOrRegister }],
+        routes: [{ name: EAppRoutes.auth }],
       });
     } catch (error: any) {
       toast.error('אירעה שגיאה בהתנתקות');

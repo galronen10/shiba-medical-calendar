@@ -7,6 +7,7 @@ import { SchedulerNavigator } from '../schedulerNavigator';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux';
 import { loadAppointments } from '@/redux/appointments';
+import { LogoutButton } from '@/navigation/components';
 
 const stack = createNativeStackNavigator();
 
@@ -31,7 +32,11 @@ export const MainNavigator = () => {
         options={{ headerShown: false }}
       />
 
-      <stack.Screen name={EAppRoutes.home} component={HomeScreen} />
+      <stack.Screen
+        name={EAppRoutes.home}
+        component={HomeScreen}
+        options={() => ({ headerRight: LogoutButton })}
+      />
     </stack.Navigator>
   );
 };
