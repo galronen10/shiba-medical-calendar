@@ -5,6 +5,7 @@ import React from 'react';
 import { IMedicalField } from '@/models/medicalField.model';
 import { api } from '@/api';
 import { MedicalFieldCard } from '../medicalFieldCard';
+import { FullSizeLoader } from '@/components/common';
 
 interface IProps {
   selectMedicalField: (medicalField: IMedicalField) => void;
@@ -16,9 +17,12 @@ export const SelectMedicalFieldList: FC<IProps> = ({
   handleLoadError,
 }) => {
   const [medicalFields, setMedicalFields] = useState<IMedicalField[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const queryData = async () => {
+      setIsLoading(true);
+
       try {
         const medicalFieldFromServer: IMedicalField[] =
           await api.medicalField.getAll();
@@ -27,6 +31,7 @@ export const SelectMedicalFieldList: FC<IProps> = ({
       } catch {
         handleLoadError();
       }
+      setIsLoading(false);
     };
 
     queryData();
@@ -35,16 +40,20 @@ export const SelectMedicalFieldList: FC<IProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.formBody}>
-        <FlatList
-          data={medicalFields}
-          numColumns={2}
-          renderItem={({ item }) => (
-            <Pressable onPress={() => selectMedicalField(item)}>
-              <MedicalFieldCard medicalField={item} />
-            </Pressable>
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
+        {isLoading ? (
+          <FullSizeLoader />
+        ) : (
+          <FlatList
+            data={medicalFields}
+            numColumns={2}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => selectMedicalField(item)}>
+                <MedicalFieldCard medicalField={item} />
+              </Pressable>
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        )}
       </View>
     </View>
   );
