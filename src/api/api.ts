@@ -4,7 +4,9 @@ import axios from 'axios';
 import { IAppointmentDTO, IAppointments } from '@/models/appointment.entity';
 import { IUser } from '@/models/user.model';
 
-export const serverURL = process.env.SERVER_URL || 'http:/192.168.1.29:3000';
+export const serverURL =
+  process.env.SERVER_URL ||
+  'https://shiba-medical-calendar-server.onrender.com';
 
 export const axiosInstance = axios.create({
   baseURL: serverURL,
